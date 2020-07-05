@@ -1,0 +1,10 @@
+.description{
+	font-size: 1.5em;
+}
+
+@media screen and (max-width: 550px) {
+  .description {
+    margin-top: 20px;
+    text-align: center;
+  }
+}

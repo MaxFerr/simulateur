@@ -1,0 +1,14 @@
+#device{
+	width: 45px;
+}
+
+.amount{
+	display: block;
+	margin-top: 10px;
+}
+.red{
+	color: red;
+}
+#loanAmount{
+	width: 75%;
+}

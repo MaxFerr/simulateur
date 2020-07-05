@@ -1,0 +1,18 @@
+.loanCard{
+	border:2px solid black;
+	text-align: center;
+	width: 125px;
+	margin: 5px;
+	padding: 3px;	
+}
+
+.loanCard:hover{
+	background-color: blue;
+	color:white;
+	cursor: pointer;
+}
+
+.active{
+	background-color: blue;
+	color:white;
+}

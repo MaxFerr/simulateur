@@ -1,0 +1,11 @@
+.loanList{
+	max-width:600px;
+	margin-top: 15px;
+}
+
+.loanListCard{
+	display:flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
