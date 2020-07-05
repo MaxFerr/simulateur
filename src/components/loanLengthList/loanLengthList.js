@@ -1,5 +1,5 @@
 import React from 'react';
-import LoanLength from '../loanLength/loanLength.js'
+import LoanLength from '../loanLength/loanLength.js';
 import './loanLengthList.css';
 
 const LoanLengthList=(props)=>{
@@ -19,7 +19,7 @@ const LoanLengthList=(props)=>{
 						  index={ind}
 						  active={props.active}
 						/>
-			})
+			});
 		}else if(range.range_max===undefined){
 			return <LoanLength
 						  defaultRangeDuration={props.defaultRangeDuration}
@@ -33,17 +33,17 @@ const LoanLengthList=(props)=>{
 						  index={i}
 						  active={props.active}
 						/>
-		}
-		return null
-	})
+		};
+		return null;
+	});
 	return (
 		<div className='loanList'>
 			<p>Durée</p>
-			<div className='loanListCard' >
+			<div className='loanListCard'>
 				{list}
 			</div>
 		</div>
-		)
-}
+		);
+};
 
 export default LoanLengthList;

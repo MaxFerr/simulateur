@@ -8,7 +8,7 @@ const LoanType=(props)=>{
 		return <option 
 		value={type} 
 		key={`${cred[0]}`}>{type}</option>
-	})
+	});
 	return (
 		<div>
 			<label className='typeLab' >Type de prêt</label>
@@ -17,7 +17,7 @@ const LoanType=(props)=>{
 			    {loanTypeTitle}
 			  </select>
 		</div>
-		)
-}
+		);
+};
 
 export default LoanType;

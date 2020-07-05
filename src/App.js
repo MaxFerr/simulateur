@@ -7,10 +7,11 @@ import LoanAmount from './components/loanAmount/loanAmount'
 import LoanDescription from './components/loanDescription/loanDescription'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoanLengthList from './components/loanLengthList/loanLengthList'
+const ref = React.createRef();
 
 class App extends Component {
   constructor(props){
-    super(props)
+    super(props)    
     this.state={
         credits:Object.entries(data),
         loanType:"",
@@ -32,8 +33,14 @@ class App extends Component {
           rang:0          
         },
         active:null
-    }
-  }
+    };
+  };
+  handleClick = () =>
+        ref.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+
   handleLoanType=(event)=>{
     //handle the change and the selection of the loan type
     //reseting the state
@@ -52,10 +59,10 @@ class App extends Component {
           length:"",
           rang:0          
         }
-    })
+    });
     //looping in credits
     for (var i = 0; i < this.state.credits.length; i++) {
-      let index=i
+      let index=i;
       //checking if credits.description is true (it can be undefined because of 'credit hypo' loan type object)
       if(this.state.credits[i][1].description){
         //finding the data corresponding to the input's value 
@@ -70,9 +77,9 @@ class App extends Component {
               defaultRangeDuration:prevState.credits[index][1].credit.range_duration_default,
               rangeDurationType:prevState.credits[index][1].credit.range_duration_type,
               ranges:prevState.credits[index][1].ranges
-            }
-          })
-        }
+            };
+          });
+        };
       }else{
         //finding the data corresponding to the input's value (for 'credit hypo')
         //this if statement isnt necessary. It's just there if we add more data like
@@ -87,12 +94,12 @@ class App extends Component {
               defaultRangeDuration:prevState.credits[index][1].credit.range_duration_default,
               rangeDurationType:prevState.credits[index][1].credit.range_duration_type,
               ranges:prevState.credits[index][1].ranges
-            }
-          })
-        }        
-      }
-    }    
-  }
+            };
+          });
+        };       
+      };
+    };   
+  };
 
   handleAmountChange=(e)=>{
     //reseting the state when the amount change
@@ -108,7 +115,7 @@ class App extends Component {
             length:"",
             rang:0          
           }
-    })
+    });
     //handling error if the amount is insufficient or superior to the data
     //corresponding to the range and the loan type 
     this.setState((prevState,props)=>{
@@ -117,14 +124,14 @@ class App extends Component {
         prevState.selectedAmount>prevState.loanAmountMax){
         return {
           errorAmount:true
-        } 
+        }; 
       }else{
         return {
           errorAmount:false
-        } 
-      }
-    })          
-  }
+        }; 
+      };
+    });          
+  };
 
   handleLoanCard=(monthlyPaymentSum,amount,taeg,length,ranges,index)=>{
     //handle click on card   
@@ -148,9 +155,10 @@ class App extends Component {
           rang:ranges
         },
         active:index
-        }
+        };
       });
-  }
+      this.handleClick();
+  };
   
   render(){    
       return (
@@ -179,13 +187,15 @@ class App extends Component {
               />
             </Col>
             <Col sm={4} >
+              <span ref={ref}>
               <LoanDescription sum={this.state.sum}/>
+              </span>
             </Col>
           </Row>
         </Container>        
       </div>
     );
-  }  
-}
+  };  
+};
 
 export default App;
