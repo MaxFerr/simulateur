@@ -9,3 +9,12 @@
 	flex-wrap: wrap;
 }
 
+@media screen and (max-width: 550px) {
+  .loanListCard{
+	display:flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	}
+}
+
