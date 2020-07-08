@@ -7,12 +7,9 @@ import LoanAmount from './components/loanAmount/loanAmount'
 import LoanDescription from './components/loanDescription/loanDescription'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoanLengthList from './components/loanLengthList/loanLengthList'
-const ref = React.createRef();
 
-class App extends Component {
-  constructor(props){
-    super(props)    
-    this.state={
+const ref = React.createRef();
+const initialState={
         credits:Object.entries(data),
         loanType:"",
         loanTypeData:[],        
@@ -34,42 +31,34 @@ class App extends Component {
         },
         active:null
     };
+
+class App extends Component {
+  constructor(props){
+    super(props)    
+    this.state=initialState
   };
+
+
   handleClick = () =>
-        ref.current.scrollIntoView({
+    ref.current.scrollIntoView({
           behavior: 'smooth',
           block: 'start',
         });
 
+
   handleLoanType=(event)=>{
     //handle the change and the selection of the loan type
     //reseting the state
+    const val=event.target.value
     this.setState({
-      loanTypeData:[],
-      loanType:event.target.value,
-      errorAmount:false,
-      active:null,
-      ranges:[],
-      sum:{
-          monthlyPaymentSum:0,
-          loanTypeSum:"Pas encore sélectionné",
-          amount:0,
-          taeg:0,
-          total:0,
-          length:"",
-          rang:0          
-        }
+      ...initialState,
+      loanType:val      
     });
     //looping in credits
-    for (var i = 0; i < this.state.credits.length; i++) {
-      let index=i;
-      //checking if credits.description is true (it can be undefined because of 'credit hypo' loan type object)
-      if(this.state.credits[i][1].description){
-        //finding the data corresponding to the input's value 
-        if(this.state.credits[i][1].description.title===event.target.value){
-          //updating the state
-          this.setState((prevState,props)=>{
-            return {
+    this.setState((prevState,props)=>{
+      for (var i = 0; i < this.state.credits.length; i++){
+        let index=i;
+        let uState={
               loanTypeData:prevState.credits[index],              
               loanAmountMax:prevState.credits[index][1].credit.amount_max,
               loanAmountMin:prevState.credits[index][1].credit.amount_min,
@@ -78,32 +67,29 @@ class App extends Component {
               rangeDurationType:prevState.credits[index][1].credit.range_duration_type,
               ranges:prevState.credits[index][1].ranges
             };
-          });
-        };
-      }else{
-        //finding the data corresponding to the input's value (for 'credit hypo')
-        //this if statement isnt necessary. It's just there if we add more data like
-        //this.state.credits[i][1].i18n
-        if(this.state.credits[i][1].i18n.title===event.target.value){          
-          this.setState((prevState,props)=>{
-            return {
-              loanTypeData:prevState.credits[index],              
-              loanAmountMax:prevState.credits[index][1].credit.amount_max,
-              loanAmountMin:prevState.credits[index][1].credit.amount_min,
-              selectedAmount:prevState.credits[index][1].credit.amount_default,
-              defaultRangeDuration:prevState.credits[index][1].credit.range_duration_default,
-              rangeDurationType:prevState.credits[index][1].credit.range_duration_type,
-              ranges:prevState.credits[index][1].ranges
-            };
-          });
-        };       
-      };
-    };   
+            //checking if credits.description is true (it can be undefined because of 'credit hypo' loan type object)
+            if(this.state.credits[i][1].description){
+              //finding the data corresponding to the input's value 
+                if(this.state.credits[i][1].description.title===val){
+                  //updating the state
+                  return uState
+                }
+            }else{
+              //finding the data corresponding to the input's value (for 'credit hypo')
+              //this if statement isnt necessary. It's just there if we add more data like
+              //this.state.credits[i][1].i18n
+                if(this.state.credits[i][1].i18n.title===val){
+                  //updating the state
+                  return uState
+                }
+            }
+      }        
+    });
   };
 
   handleAmountChange=(e)=>{
     //reseting the state when the amount change
-    this.setState({
+    this.setState({      
       selectedAmount:e.target.value,
       active:null,
         sum:{
@@ -114,22 +100,16 @@ class App extends Component {
             total:0,
             length:"",
             rang:0          
-          }
+          }      
     });
     //handling error if the amount is insufficient or superior to the data
     //corresponding to the range and the loan type 
     this.setState((prevState,props)=>{
-      if(prevState.selectedAmount<prevState.loanAmountMin 
+      return {
+        errorAmount:prevState.selectedAmount<prevState.loanAmountMin 
         || 
-        prevState.selectedAmount>prevState.loanAmountMax){
-        return {
-          errorAmount:true
-        }; 
-      }else{
-        return {
-          errorAmount:false
-        }; 
-      };
+        prevState.selectedAmount>prevState.loanAmountMax ? true : false
+      }      
     });          
   };
 
