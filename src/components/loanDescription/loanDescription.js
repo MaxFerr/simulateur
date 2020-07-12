@@ -1,5 +1,6 @@
 import React from 'react';
 import './loanDescription.css';
+import {connect} from 'react-redux';
 
 const LoanDescritpion=(props)=>{
 	return (
@@ -8,10 +9,18 @@ const LoanDescritpion=(props)=>{
 			<p>Type de crédit : {props.sum.loanTypeSum} </p>
 			<p>Montant : {props.sum.amount}€</p>
 			<p>TAEG : {props.sum.taeg}%</p>
-			<p>Durée : {props.sum.rang} {props.sum.length==='years'?'ans':'mois'} </p>
+			<p>Durée : {props.sum.rang} {props.sum.rangeDurationType==='years'?'ans':'mois'} </p>
 			<p>Total à payer : {props.sum.total}€</p>
 		</div>
-		)
-}
+		);
+};
 
-export default LoanDescritpion;
+const mapStateToProps=state=>{
+	return {
+		sum:state.sum
+	};
+};
+
+
+
+export default connect(mapStateToProps)(LoanDescritpion);
