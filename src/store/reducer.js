@@ -27,7 +27,15 @@ const reducer=(state=initialState,action )=>{
 	switch(action.type){
 		case 'SELECT_LOAN_TYPE':
 		//handle the change and the selection of the loan type
-    	//looping in credits    
+    	//looping in credits
+		    	state={
+		    		...initialState,
+		    		loanType:action.value,
+		    		sum:{
+			          	...initialState.sum,
+			          	loanTypeSum:action.value
+		        	},
+		    	}; 
 		      for (var i = 0; i < state.credits.length; i++){
 		        let index=i;
 		        let uState={
